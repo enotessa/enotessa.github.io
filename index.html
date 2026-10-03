@@ -3,466 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b19">
-  <meta name="description" content="Raccoon App Labs — независимый разработчик мобильных приложений и игр.">
+  <meta name="theme-color" content="#090914">
+  <meta name="description" content="Raccoon App Labs — мобильные приложения и игры с характером.">
   <title>Raccoon App Labs — приложения и игры с характером</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-
-    :root {
-      color-scheme: dark;
-      --ink: #f7f5ff;
-      --muted: #aaa6be;
-      --violet: #8d7cff;
-      --peach: #ffae73;
-      --mint: #72f1cb;
-      --night: #090914;
-      --panel: rgba(22, 21, 43, .64);
-      --line: rgba(255, 255, 255, .1);
-      --mx: 50%;
-      --my: 35%;
-      font-family: "Manrope", system-ui, sans-serif;
-      background: var(--night);
-      color: var(--ink);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-width: 320px;
-      min-height: 100vh;
-      overflow-x: hidden;
-      background:
-        radial-gradient(720px circle at var(--mx) var(--my), rgba(117, 91, 255, .18), transparent 55%),
-        radial-gradient(900px circle at 8% 92%, rgba(73, 242, 194, .09), transparent 42%),
-        var(--night);
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      opacity: .2;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: linear-gradient(to bottom, black, transparent 88%);
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: -20%;
-      z-index: -1;
-      pointer-events: none;
-      background: conic-gradient(from 180deg at 50% 50%, transparent, rgba(141,124,255,.06), transparent, rgba(114,241,203,.05), transparent);
-      animation: atmosphere 28s linear infinite;
-    }
-
-    a { color: inherit; }
-    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
-
-    header {
-      height: 92px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -.03em;
-    }
-
-    .brand-mark {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 12px;
-      background: linear-gradient(145deg, #252047, #141326);
-      box-shadow: inset 0 1px rgba(255,255,255,.12), 0 8px 30px rgba(0,0,0,.3);
-      overflow: hidden;
-    }
-
-    .brand-mark img { width: 39px; height: 39px; object-fit: contain; }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.035);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 0 5px rgba(114,241,203,.08), 0 0 18px rgba(114,241,203,.65);
-      animation: breathe 2.7s ease-in-out infinite;
-    }
-
-    .hero {
-      min-height: calc(100vh - 150px);
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
-      align-items: center;
-      gap: clamp(40px, 7vw, 100px);
-      padding: 48px 0 96px;
-    }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 22px;
-      color: var(--mint);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
-
-    h1 {
-      max-width: 760px;
-      margin: 0;
-      font-size: clamp(52px, 8.2vw, 106px);
-      font-weight: 800;
-      line-height: .94;
-      letter-spacing: -.075em;
-    }
-
-    .gradient-word {
-      position: relative;
-      display: inline-block;
-      padding-right: .08em;
-      color: transparent;
-      background: linear-gradient(105deg, var(--peach), #ffdf9f 44%, var(--mint) 78%, var(--violet));
-      background-size: 220% 100%;
-      background-clip: text;
-      -webkit-background-clip: text;
-      animation: shimmer 7s ease-in-out infinite;
-    }
-
-    .intro {
-      max-width: 620px;
-      margin: 30px 0 0;
-      color: var(--muted);
-      font-size: clamp(18px, 2.2vw, 23px);
-      line-height: 1.55;
-      letter-spacing: -.02em;
-    }
-
-    .signature {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 38px;
-    }
-
-    .chip {
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: rgba(255,255,255,.035);
-      color: #d6d2e2;
-      font-size: 14px;
-      transition: transform .25s ease, border-color .25s ease, background .25s ease;
-    }
-
-    .chip:hover { transform: translateY(-3px); border-color: rgba(114,241,203,.42); background: rgba(114,241,203,.07); }
-
-    .visual {
-      position: relative;
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      perspective: 900px;
-    }
-
-    .halo {
-      position: absolute;
-      width: 78%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      filter: blur(40px);
-      background: radial-gradient(circle, rgba(141,124,255,.24), rgba(255,174,115,.08) 45%, transparent 70%);
-      animation: halo 5s ease-in-out infinite alternate;
-    }
-
-    .orbit {
-      position: absolute;
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 50%;
-      transform-style: preserve-3d;
-    }
-
-    .orbit::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -6px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 28px var(--mint);
-    }
-
-    .orbit-a { width: 90%; aspect-ratio: 1; animation: spin-a 15s linear infinite; }
-    .orbit-b { width: 68%; aspect-ratio: 1; border-color: rgba(255,174,115,.25); animation: spin-b 11s linear infinite reverse; }
-    .orbit-b::after { background: var(--peach); box-shadow: 0 0 28px var(--peach); }
-
-    .core {
-      position: relative;
-      width: 48%;
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 34%;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.13), transparent 45%),
-        linear-gradient(145deg, #29234e, #121124);
-      box-shadow: inset 0 1px rgba(255,255,255,.18), 0 35px 80px rgba(0,0,0,.42), 0 0 80px rgba(141,124,255,.15);
-      transform: rotate(-9deg);
-      animation: float 5.4s ease-in-out infinite;
-    }
-
-    .core-logo {
-      width: 88%;
-      height: 88%;
-      object-fit: contain;
-      filter: drop-shadow(0 16px 24px rgba(0,0,0,.32)) drop-shadow(0 0 22px rgba(103,67,255,.22));
-      transform: rotate(9deg);
-    }
-
-    .spark {
-      position: absolute;
-      width: 7px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 0 18px white;
-      animation: blink 2.8s ease-in-out infinite;
-    }
-    .spark.one { top: 12%; right: 18%; animation-delay: -.7s; }
-    .spark.two { bottom: 19%; left: 9%; width: 4px; animation-delay: -1.5s; }
-    .spark.three { top: 28%; left: 14%; width: 3px; animation-delay: -2.1s; }
-
-    .ticker {
-      border-block: 1px solid var(--line);
-      overflow: hidden;
-      background: rgba(255,255,255,.022);
-    }
-
-    .ticker-track {
-      width: max-content;
-      display: flex;
-      gap: 30px;
-      padding: 18px 0;
-      color: #c8c3d7;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      animation: ticker 24s linear infinite;
-    }
-
-    .ticker-track span::after { content: "✦"; margin-left: 30px; color: var(--peach); }
-
-    .values { padding: 110px 0 130px; }
-    .section-head { max-width: 720px; margin-bottom: 46px; }
-    .section-head small { color: var(--violet); font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-    h2 { margin: 14px 0 0; font-size: clamp(36px, 5vw, 62px); line-height: 1.05; letter-spacing: -.055em; }
-
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .card {
-      position: relative;
-      min-height: 285px;
-      padding: 30px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: var(--panel);
-      backdrop-filter: blur(18px);
-      transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      right: -75px;
-      bottom: -85px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: .12;
-      filter: blur(2px);
-      transition: transform .5s ease, opacity .35s ease;
-    }
-
-    .card:hover { transform: translateY(-9px); border-color: color-mix(in srgb, var(--accent) 52%, transparent); box-shadow: 0 25px 55px rgba(0,0,0,.24); }
-    .card:hover::before { transform: scale(1.35); opacity: .2; }
-    .card:nth-child(1) { --accent: var(--peach); }
-    .card:nth-child(2) { --accent: var(--mint); }
-    .card:nth-child(3) { --accent: var(--violet); }
-    .number { color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .13em; }
-    .card h3 { margin: 74px 0 12px; font-size: 26px; letter-spacing: -.035em; }
-    .card p { margin: 0; color: var(--muted); line-height: 1.6; }
-
-    footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 32px 0 48px;
-      border-top: 1px solid var(--line);
-      color: #858196;
-      font-size: 13px;
-    }
-
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.75,.25,1); }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    @keyframes atmosphere { to { transform: rotate(360deg); } }
-    @keyframes breathe { 50% { opacity: .5; transform: scale(.72); } }
-    @keyframes shimmer { 50% { background-position: 100% 50%; } }
-    @keyframes halo { to { transform: scale(1.12); opacity: .65; } }
-    @keyframes spin-a { to { transform: rotate(360deg) rotateX(62deg) rotateZ(18deg); } }
-    @keyframes spin-b { to { transform: rotate(360deg) rotateY(65deg) rotateZ(-14deg); } }
-    @keyframes float { 50% { transform: rotate(-4deg) translateY(-16px); } }
-    @keyframes blink { 50% { opacity: .18; transform: scale(.5); } }
-    @keyframes ticker { to { transform: translateX(-50%); } }
-
-    @media (max-width: 800px) {
-      .hero { min-height: auto; grid-template-columns: 1fr; padding: 55px 0 80px; }
-      .visual { width: min(430px, 92vw); margin: 0 auto; order: -1; }
-      .cards { grid-template-columns: 1fr; }
-      .card { min-height: 220px; }
-      .card h3 { margin-top: 45px; }
-      .values { padding: 84px 0 96px; }
-    }
-
-    @media (max-width: 520px) {
-      .shell { width: min(100% - 28px, 1180px); }
-      header { height: 76px; }
-      .status { padding: 9px 11px; }
-      .status-label { display: none; }
-      .hero { gap: 34px; padding-top: 34px; }
-      h1 { font-size: clamp(46px, 15vw, 72px); }
-      .intro { font-size: 17px; }
-      .visual { width: min(340px, 92vw); }
-      footer { align-items: flex-start; flex-direction: column; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: .01ms !important; }
-      .reveal { opacity: 1; transform: none; }
-    }
+    :root{color-scheme:dark;--ink:#f8f7ff;--muted:#aaa7ba;--violet:#907dff;--peach:#ffad74;--mint:#6ee8c7;--night:#090914;--panel:rgba(20,19,39,.76);--line:rgba(255,255,255,.105);--mx:50%;--my:30%;font-family:Manrope,system-ui,sans-serif;background:var(--night);color:var(--ink)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;min-height:100vh;overflow-x:hidden;background:radial-gradient(760px circle at var(--mx) var(--my),rgba(116,88,255,.17),transparent 57%),radial-gradient(900px circle at 8% 94%,rgba(70,235,192,.085),transparent 44%),var(--night)}
+    body:before{content:"";position:fixed;inset:0;z-index:-2;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,#000,transparent 88%)}
+    body:after{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background:conic-gradient(from 180deg at 50% 50%,transparent,rgba(141,124,255,.055),transparent,rgba(114,241,203,.045),transparent);animation:atmosphere 32s linear infinite}
+    a{color:inherit}button{font:inherit}.shell{width:min(1200px,calc(100% - 40px));margin:auto}header{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:inline-flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font-size:18px;font-weight:800;letter-spacing:-.03em}.brand-mark{width:42px;height:42px;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:12px;background:linear-gradient(145deg,#252047,#141326);box-shadow:inset 0 1px rgba(255,255,255,.12),0 8px 30px rgba(0,0,0,.3)}.brand-mark img{width:39px;height:39px;object-fit:contain}.header-tools{display:flex;align-items:center;gap:18px}.apps-link{color:#c4c0d2;text-decoration:none;font-size:13px;font-weight:700}.apps-link:hover{color:#fff}
+    .language-switch{--side:0;position:relative;width:112px;height:42px;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.045)}.language-switch:before{content:"";position:absolute;top:4px;left:4px;width:51px;height:32px;border-radius:999px;background:linear-gradient(135deg,var(--violet),#6650ed);box-shadow:0 5px 18px rgba(106,82,238,.4),inset 0 1px rgba(255,255,255,.25);transform:translateX(calc(var(--side)*51px));transition:transform .42s cubic-bezier(.2,.8,.2,1)}.language-switch button{position:relative;z-index:1;border:0;padding:0;color:#908ba0;background:transparent;cursor:pointer;font-size:11px;font-weight:800;letter-spacing:.12em}.language-switch button[aria-pressed=true]{color:#fff}
+    .hero{min-height:calc(100vh - 130px);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);align-items:center;gap:clamp(40px,7vw,100px);padding:46px 0 90px}.eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 22px;color:var(--mint);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.eyebrow:before{content:"";width:38px;height:1px;background:currentColor}h1{max-width:780px;margin:0;font-size:clamp(52px,8.15vw,106px);font-weight:800;line-height:.94;letter-spacing:-.075em}.gradient-word{display:inline-block;padding-right:.08em;color:transparent;background:linear-gradient(105deg,var(--peach),#ffdf9f 44%,var(--mint) 78%,var(--violet));background-size:220% 100%;background-clip:text;-webkit-background-clip:text;animation:shimmer 7s ease-in-out infinite}.intro{max-width:640px;margin:30px 0 0;color:var(--muted);font-size:clamp(18px,2.1vw,22px);line-height:1.58;letter-spacing:-.02em}.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:36px}.hero-cta{display:inline-flex;align-items:center;gap:11px;min-height:48px;padding:0 18px;border:1px solid rgba(255,255,255,.13);border-radius:14px;color:#fff;background:linear-gradient(135deg,rgba(144,125,255,.22),rgba(110,232,199,.1));text-decoration:none;font-size:14px;font-weight:800;transition:.25s}.hero-cta:hover{transform:translateY(-3px);border-color:rgba(110,232,199,.48);box-shadow:0 15px 34px rgba(0,0,0,.25)}.hero-note{color:#858194;font-size:13px}
+    .visual{position:relative;aspect-ratio:1;display:grid;place-items:center;perspective:900px}.halo{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;filter:blur(40px);background:radial-gradient(circle,rgba(141,124,255,.24),rgba(255,174,115,.08) 45%,transparent 70%);animation:halo 5s ease-in-out infinite alternate}.orbit{position:absolute;border:1px solid rgba(255,255,255,.15);border-radius:50%;transform-style:preserve-3d}.orbit:after{content:"";position:absolute;top:50%;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--mint);box-shadow:0 0 28px var(--mint)}.orbit-a{width:90%;aspect-ratio:1;animation:spin-a 15s linear infinite}.orbit-b{width:68%;aspect-ratio:1;border-color:rgba(255,174,115,.25);animation:spin-b 11s linear infinite reverse}.orbit-b:after{background:var(--peach);box-shadow:0 0 28px var(--peach)}.core{position:relative;width:48%;aspect-ratio:1;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);border-radius:34%;background:linear-gradient(145deg,rgba(255,255,255,.13),transparent 45%),linear-gradient(145deg,#29234e,#121124);box-shadow:inset 0 1px rgba(255,255,255,.18),0 35px 80px rgba(0,0,0,.42),0 0 80px rgba(141,124,255,.15);transform:rotate(-9deg);animation:float 5.4s ease-in-out infinite}.core-logo{width:88%;height:88%;object-fit:contain;filter:drop-shadow(0 16px 24px rgba(0,0,0,.32));transform:rotate(9deg)}.spark{position:absolute;width:7px;aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 0 18px #fff;animation:blink 2.8s ease-in-out infinite}.spark.one{top:12%;right:18%}.spark.two{bottom:19%;left:9%;width:4px}.spark.three{top:28%;left:14%;width:3px}
+    .ticker{border-block:1px solid var(--line);overflow:hidden;background:rgba(255,255,255,.022)}.ticker-track{width:max-content;display:flex;gap:30px;padding:18px 0;color:#c8c3d7;font-size:13px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;animation:ticker 25s linear infinite}.ticker-track span:after{content:"✦";margin-left:30px;color:var(--peach)}
+    .showcase{padding:116px 0 135px}.section-kicker{color:var(--violet);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.section-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;margin-bottom:40px}.section-top h2,.values h2{max-width:800px;margin:14px 0 0;font-size:clamp(40px,6vw,74px);line-height:1.02;letter-spacing:-.06em}.section-copy{max-width:500px;margin:20px 0 0;color:var(--muted);line-height:1.65}.counter{display:flex;align-items:baseline;gap:8px;color:#817c91}.counter strong{color:var(--ink);font-size:54px;line-height:1;letter-spacing:-.08em}.counter span{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.filters{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 28px}.filter{min-height:42px;padding:0 16px;border:1px solid var(--line);border-radius:999px;color:#9f9aae;background:rgba(255,255,255,.025);cursor:pointer;font-size:13px;font-weight:700;transition:.25s}.filter:hover{color:#fff;transform:translateY(-2px)}.filter[aria-pressed=true]{color:#0b0b18;border-color:transparent;background:var(--mint);box-shadow:0 8px 24px rgba(110,232,199,.22)}
+    .app-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.app-card{--accent:#907dff;--accent2:#6ee8c7;position:relative;grid-column:span 4;min-height:410px;display:flex;flex-direction:column;overflow:hidden;padding:27px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.015) 50%),var(--panel);box-shadow:inset 0 1px rgba(255,255,255,.07);transform-style:preserve-3d;transition:opacity .4s,transform .45s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}.app-card.wide{grid-column:span 8}.app-card.hidden{display:none}.app-card:hover{border-color:color-mix(in srgb,var(--accent) 55%,transparent);box-shadow:0 28px 70px rgba(0,0,0,.32),0 0 45px color-mix(in srgb,var(--accent) 11%,transparent)}.app-card:before{content:"";position:absolute;width:300px;height:300px;top:-135px;right:-120px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 38%,transparent),transparent 69%);transition:transform .7s}.app-card:hover:before{transform:scale(1.25) translate(-14px,18px)}.app-card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;background:radial-gradient(500px circle at var(--card-x,50%) var(--card-y,30%),color-mix(in srgb,var(--accent2) 20%,transparent),transparent 42%)}.card-head,.app-content,.store-links{position:relative;z-index:1;transform:translateZ(16px)}.card-head{display:flex;justify-content:space-between;gap:16px;align-items:center}.app-number{color:color-mix(in srgb,var(--accent) 85%,white);font-size:11px;font-weight:800;letter-spacing:.15em}.app-tag{padding:7px 10px;border:1px solid color-mix(in srgb,var(--accent) 38%,transparent);border-radius:999px;color:#cfcbda;background:color-mix(in srgb,var(--accent) 8%,transparent);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.app-orb{position:relative;width:92px;height:92px;display:grid;place-items:center;margin:40px 0 26px;border:1px solid color-mix(in srgb,var(--accent) 38%,transparent);border-radius:31px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 25%,transparent),rgba(255,255,255,.025));box-shadow:inset 0 1px rgba(255,255,255,.12),0 18px 44px color-mix(in srgb,var(--accent) 13%,transparent);color:#fff;font-size:37px;font-weight:800;transform:rotate(-5deg);transition:.5s}.app-card:hover .app-orb{transform:rotate(5deg) scale(1.07);border-radius:50%}.app-orb:after{content:"";position:absolute;inset:-8px;border:1px dashed color-mix(in srgb,var(--accent2) 42%,transparent);border-radius:38px;animation:orb-spin 18s linear infinite}.app-card h3{margin:0;font-size:clamp(25px,2.5vw,35px);line-height:1.08;letter-spacing:-.045em}.app-card p{max-width:590px;margin:13px 0 26px;color:var(--muted);font-size:15px;line-height:1.65}.store-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:auto}.store-link{display:inline-flex;align-items:center;gap:9px;min-height:43px;padding:0 14px;border:1px solid rgba(255,255,255,.13);border-radius:13px;color:#eeeaf5;background:rgba(5,5,13,.38);text-decoration:none;font-size:12px;font-weight:800;transition:.22s}.store-link:hover{transform:translateY(-3px);color:#fff;border-color:color-mix(in srgb,var(--accent) 65%,transparent);background:color-mix(in srgb,var(--accent) 12%,rgba(5,5,13,.55))}.store-icon{width:22px;height:22px;display:grid;place-items:center;border-radius:7px;background:rgba(255,255,255,.08);font-size:10px}.store-arrow{opacity:.55}.stories{--accent:#ba79ff;--accent2:#ffca76}.keys{--accent:#ff6b67;--accent2:#6edfee}.bloom{--accent:#ff77a9;--accent2:#ffd36d}.muropolis{--accent:#63ddb7;--accent2:#ffad74}.neon{--accent:#7c5cff;--accent2:#25efff}.food{--accent:#ff9d57;--accent2:#9ed765}.dokupit{--accent:#59bfff;--accent2:#b1ed62}
+    .values{padding:0 0 126px}.values-head{max-width:780px;margin-bottom:42px}.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.value-card{min-height:230px;padding:28px;border:1px solid var(--line);border-radius:25px;background:rgba(255,255,255,.027)}.value-card .number{color:var(--peach);font-size:12px;font-weight:800;letter-spacing:.14em}.value-card h3{margin:62px 0 10px;font-size:25px;letter-spacing:-.035em}.value-card p{margin:0;color:var(--muted);line-height:1.62}footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:34px 0 48px;border-top:1px solid var(--line);color:#858196;font-size:13px}.footer-mail{color:#bbb6ca;text-decoration:none}.footer-mail:hover{color:#fff}.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s cubic-bezier(.2,.75,.25,1)}.reveal.visible{opacity:1;transform:none}.language-fade{animation:language-fade .38s ease}
+    @keyframes atmosphere{to{transform:rotate(360deg)}}@keyframes shimmer{50%{background-position:100% 50%}}@keyframes halo{to{transform:scale(1.12);opacity:.65}}@keyframes spin-a{to{transform:rotate(360deg) rotateX(62deg) rotateZ(18deg)}}@keyframes spin-b{to{transform:rotate(360deg) rotateY(65deg) rotateZ(-14deg)}}@keyframes float{50%{transform:rotate(-4deg) translateY(-16px)}}@keyframes blink{50%{opacity:.18;transform:scale(.5)}}@keyframes ticker{to{transform:translateX(-50%)}}@keyframes orb-spin{to{transform:rotate(360deg)}}@keyframes language-fade{45%{opacity:.12;transform:translateY(5px)}}
+    @media(max-width:940px){.app-card,.app-card.wide{grid-column:span 6}.app-card:last-child{grid-column:span 12}.section-top{grid-template-columns:1fr}.counter{display:none}}
+    @media(max-width:800px){.hero{min-height:auto;grid-template-columns:1fr;padding:45px 0 82px}.visual{width:min(430px,92vw);margin:auto;order:-1}.value-grid{grid-template-columns:1fr}.value-card{min-height:190px}.value-card h3{margin-top:42px}.showcase{padding:86px 0 100px}.values{padding-bottom:95px}}
+    @media(max-width:610px){.shell{width:min(100% - 28px,1200px)}header{min-height:78px}.brand{font-size:15px}.brand-mark{width:38px;height:38px}.brand-mark img{width:35px;height:35px}.apps-link{display:none}.language-switch{width:104px;height:40px}.language-switch:before{width:47px;height:30px;transform:translateX(calc(var(--side)*47px))}.hero{gap:28px;padding-top:28px}h1{font-size:clamp(47px,15vw,70px)}.intro{font-size:17px}.visual{width:min(325px,88vw)}.app-card,.app-card.wide,.app-card:last-child{grid-column:span 12;min-height:390px}.app-card{padding:24px}.section-top h2,.values h2{font-size:41px}.filters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.filter{flex:0 0 auto}footer{align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}.app-card:hover{transform:none!important}}
   </style>
 </head>
 <body>
   <header class="shell">
-    <a class="brand" href="#top" aria-label="Raccoon App Labs — на главную">
-      <span class="brand-mark" aria-hidden="true"><img src="assets/raccoon-app-labs-logo.webp" alt=""></span>
-      <span>Raccoon App Labs</span>
-    </a>
-    <div class="status"><span class="status-dot" aria-hidden="true"></span><span class="status-label">Создаём новое</span></div>
+    <a class="brand" href="#top" data-i18n-aria="brandAria"><span class="brand-mark"><img src="assets/raccoon-app-labs-logo.webp" alt=""></span><span>Raccoon App Labs</span></a>
+    <div class="header-tools"><a class="apps-link" href="#apps" data-i18n="navApps">Приложения</a><div class="language-switch" role="group" data-i18n-aria="languageAria"><button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div></div>
   </header>
-
   <main id="top">
     <section class="hero shell">
-      <div class="hero-copy reveal">
-        <p class="eyebrow">Независимая разработка</p>
-        <h1>Идеи,<br>которым хочется <span class="gradient-word">жить.</span></h1>
-        <p class="intro">Создаём мобильные приложения и игры с ясной логикой, выразительным дизайном и вниманием к каждому маленькому взаимодействию.</p>
-        <div class="signature" aria-label="Направления работы">
-          <span class="chip">Мобильные игры</span>
-          <span class="chip">Приложения</span>
-        </div>
-      </div>
-
-      <div class="visual reveal" aria-hidden="true">
-        <div class="halo"></div>
-        <div class="orbit orbit-a"></div>
-        <div class="orbit orbit-b"></div>
-        <div class="core"><img class="core-logo" src="assets/raccoon-app-labs-logo.webp" alt=""></div>
-        <i class="spark one"></i><i class="spark two"></i><i class="spark three"></i>
+      <div class="hero-copy reveal"><p class="eyebrow" data-i18n="eyebrow">Независимая разработка</p><h1 data-i18n-html="heroTitle">Семь миров.<br>Один <span class="gradient-word">характер.</span></h1><p class="intro" data-i18n="heroCopy">Создаём игры и приложения, к которым хочется возвращаться: чтобы играть, учиться, заботиться о близких и делать обычный день чуточку приятнее.</p><div class="hero-actions"><a class="hero-cta" href="#apps"><span data-i18n="heroCta">Открыть коллекцию</span><span>↓</span></a><span class="hero-note" data-i18n="heroNote">7 приложений · Android</span></div></div>
+      <div class="visual reveal" aria-hidden="true"><div class="halo"></div><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="core"><img class="core-logo" src="assets/raccoon-app-labs-logo.webp" alt=""></div><i class="spark one"></i><i class="spark two"></i><i class="spark three"></i></div>
+    </section>
+    <div class="ticker" aria-hidden="true"><div class="ticker-track"><span data-i18n="tickerPlay">Играть</span><span data-i18n="tickerLearn">Учиться</span><span data-i18n="tickerCare">Заботиться</span><span data-i18n="tickerCreate">Создавать</span><span data-i18n="tickerFeel">Чувствовать</span><span data-i18n="tickerPlay">Играть</span><span data-i18n="tickerLearn">Учиться</span><span data-i18n="tickerCare">Заботиться</span><span data-i18n="tickerCreate">Создавать</span><span data-i18n="tickerFeel">Чувствовать</span></div></div>
+    <section class="showcase shell" id="apps">
+      <div class="section-top reveal"><div><span class="section-kicker" data-i18n="appsKicker">Коллекция Raccoon App Labs</span><h2 data-i18n-html="appsTitle">Выберите мир.<br>Мы уже открыли дверь.</h2><p class="section-copy" data-i18n="appsCopy">У каждого приложения — свой ритм, цвет и задача. Общее одно: понятный опыт, внимание к деталям и немного магии.</p></div><div class="counter"><strong>07</strong><span data-i18n-html="counterLabel">живых<br>проектов</span></div></div>
+      <div class="filters reveal" role="group" data-i18n-aria="filterAria"><button class="filter" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">Все миры</button><button class="filter" type="button" data-filter="play" aria-pressed="false" data-i18n="filterPlay">Играть</button><button class="filter" type="button" data-filter="learn" aria-pressed="false" data-i18n="filterLearn">Учиться</button><button class="filter" type="button" data-filter="live" aria-pressed="false" data-i18n="filterLive">Жить проще</button></div>
+      <div class="app-grid">
+        <article class="app-card stories wide reveal" data-category="learn"><div class="card-head"><span class="app-number">WORLD 01</span><span class="app-tag" data-i18n="tagFamily">Для семьи</span></div><div class="app-content"><div class="app-orb">✦</div><h3 data-i18n="storiesTitle">Волшебные истории</h3><p data-i18n="storiesCopy">Сказки, которые звучат голосом мамы или папы. Читайте, слушайте, записывайте любимые истории и превращайте вечернее чтение в семейную магию.</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.volshebnye.istorii" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a></div></article>
+        <article class="app-card keys reveal" data-category="learn"><div class="card-head"><span class="app-number">WORLD 02</span><span class="app-tag" data-i18n="tagChinese">Китайский</span></div><div class="app-content"><div class="app-orb">钥</div><h3>Hanzi Keys</h3><p data-i18n="keysCopy">Ключ к иероглифам — в их деталях. Тренируйте узнавание китайских знаков короткими подходами и превращайте сложные формы в знакомые образы.</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.enotessa.chinesekeys" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.enotessa.chinesekeys" target="_blank" rel="noopener"><span class="store-icon">▶</span>Google Play <span class="store-arrow">↗</span></a></div></article>
+        <article class="app-card bloom reveal" data-category="learn"><div class="card-head"><span class="app-number">WORLD 03</span><span class="app-tag" data-i18n="tagCards">HSK-карточки</span></div><div class="app-content"><div class="app-orb">花</div><h3>Hanzi Bloom</h3><p data-i18n="bloomCopy">1 940 иероглифов HSK 3.0 в визуальных карточках. Учитесь в своём темпе, повторяйте вовремя и наблюдайте, как китайский постепенно расцветает.</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.enotessa.hanzi" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a></div></article>
+        <article class="app-card muropolis wide reveal" data-category="play"><div class="card-head"><span class="app-number">WORLD 04</span><span class="app-tag" data-i18n="tagCozyGame">Уютная игра</span></div><div class="app-content"><div class="app-orb">♢</div><h3 data-i18n="muropolisTitle">Мурополис</h3><p data-i18n="muropolisCopy">Постройте маленький город с большим мурчанием. Заселяйте котиков, развивайте мастерские и рисуйте свой уют — от дорожек и прудов до звёздных рек.</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.cozyraccoon.muropolis" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.cozyraccoon.muropolis" target="_blank" rel="noopener"><span class="store-icon">▶</span>Google Play <span class="store-arrow">↗</span></a></div></article>
+        <article class="app-card neon reveal" data-category="play"><div class="card-head"><span class="app-number">WORLD 05</span><span class="app-tag" data-i18n="tagArcade">Неон-аркада</span></div><div class="app-content"><div class="app-orb">↟</div><h3>Neon Cyber<br>Wall Kicker</h3><p data-i18n="neonCopy">Прыгайте между стенами, ловите ритм и поднимайтесь выше ловушек. Догоните тень собственного рекорда и соберите свой неоновый стиль.</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.enotessa.neoncyberwallkicker" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.enotessa.neoncyberwallkicker" target="_blank" rel="noopener"><span class="store-icon">▶</span>Google Play <span class="store-arrow">↗</span></a></div></article>
+        <article class="app-card food reveal" data-category="live"><div class="card-head"><span class="app-number">WORLD 06</span><span class="app-tag" data-i18n="tagHome">Для дома</span></div><div class="app-content"><div class="app-orb">◉</div><h3 data-i18n="foodTitle">Что едим?</h3><p data-i18n="foodCopy">Меню на неделю, любимые рецепты и умный список покупок в одном месте. Планируйте вместе — и больше не отвечайте на вечный вопрос «Что готовить?».</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.whatoeat.app" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.whatoeat.app" target="_blank" rel="noopener"><span class="store-icon">▶</span>Google Play <span class="store-arrow">↗</span></a></div></article>
+        <article class="app-card dokupit wide reveal" data-category="live"><div class="card-head"><span class="app-number">WORLD 07</span><span class="app-tag" data-i18n="tagTogether">Вместе удобнее</span></div><div class="app-content"><div class="app-orb">✓</div><h3 data-i18n="dokupitTitle">Докупить</h3><p data-i18n="dokupitCopy">Домашние запасы сами превращаются в общий список покупок. Отмечайте, что заканчивается, синхронизируйтесь с близкими и никогда не забывайте самое нужное.</p></div><div class="store-links"><a class="store-link" href="https://www.rustore.ru/catalog/app/com.cozyraccoon.dokupit" target="_blank" rel="noopener"><span class="store-icon">RU</span>RuStore <span class="store-arrow">↗</span></a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.cozyraccoon.dokupit" target="_blank" rel="noopener"><span class="store-icon">▶</span>Google Play <span class="store-arrow">↗</span></a></div></article>
       </div>
     </section>
-
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker-track">
-        <span>Mobile</span><span>Games</span><span>Apps</span><span>Independent</span><span>Details matter</span>
-        <span>Mobile</span><span>Games</span><span>Apps</span><span>Independent</span><span>Details matter</span>
-      </div>
-    </div>
-
-    <section class="values shell">
-      <div class="section-head reveal">
-        <small>Наш подход</small>
-        <h2>Технологии должны ощущаться человечно.</h2>
-      </div>
-      <div class="cards">
-        <article class="card reveal"><span class="number">01</span><h3>Идея</h3><p>Начинаем не с шаблона, а с характера продукта и ощущения, которое он должен оставить.</p></article>
-        <article class="card reveal"><span class="number">02</span><h3>Простота</h3><p>Убираем лишнее, чтобы сложные вещи становились понятными с первого прикосновения.</p></article>
-        <article class="card reveal"><span class="number">03</span><h3>Детали</h3><p>Движение, звук, ритм и визуальные акценты складываются в цельный живой опыт.</p></article>
-      </div>
-    </section>
+    <section class="values shell"><div class="values-head reveal"><span class="section-kicker" data-i18n="valuesKicker">Один почерк</span><h2 data-i18n-html="valuesTitle">Разные задачи.<br>Одинаково живой опыт.</h2></div><div class="value-grid"><article class="value-card reveal"><span class="number">01</span><h3 data-i18n="valueIdeaTitle">Характер</h3><p data-i18n="valueIdeaCopy">Каждый продукт получает собственное настроение, а не растворяется в шаблоне.</p></article><article class="value-card reveal"><span class="number">02</span><h3 data-i18n="valueSimpleTitle">Ясность</h3><p data-i18n="valueSimpleCopy">Сложные сценарии становятся понятными с первого прикосновения.</p></article><article class="value-card reveal"><span class="number">03</span><h3 data-i18n="valueDetailTitle">Забота</h3><p data-i18n="valueDetailCopy">Маленькие детали работают на большое ощущение: здесь о пользователе подумали.</p></article></div></section>
   </main>
-
-  <footer class="shell">
-    <span>© 2026 Raccoon App Labs</span>
-    <span>Мобильные приложения и игры с характером</span>
-  </footer>
-
+  <footer class="shell"><span>© 2026 Raccoon App Labs</span><a class="footer-mail" href="mailto:raccoon.app.labs@gmail.com">raccoon.app.labs@gmail.com</a><span data-i18n="footerLine">Приложения и игры с характером</span></footer>
   <script>
-    const root = document.documentElement;
-    let raf = 0;
-    window.addEventListener('pointermove', (event) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        root.style.setProperty('--mx', `${event.clientX}px`);
-        root.style.setProperty('--my', `${event.clientY}px`);
-        raf = 0;
-      });
-    }, { passive: true });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .14 });
-
-    document.querySelectorAll('.reveal').forEach((element, index) => {
-      element.style.transitionDelay = `${Math.min(index * 80, 320)}ms`;
-      observer.observe(element);
-    });
+    const translations={
+      ru:{title:'Raccoon App Labs — приложения и игры с характером',description:'Raccoon App Labs — мобильные приложения и игры: от уютных историй и изучения китайского до полезных семейных помощников.',brandAria:'Raccoon App Labs — на главную',languageAria:'Выбор языка',filterAria:'Фильтр приложений',navApps:'Приложения',eyebrow:'Независимая разработка',heroTitle:'Семь миров.<br>Один <span class="gradient-word">характер.</span>',heroCopy:'Создаём игры и приложения, к которым хочется возвращаться: чтобы играть, учиться, заботиться о близких и делать обычный день чуточку приятнее.',heroCta:'Открыть коллекцию',heroNote:'7 приложений · Android',tickerPlay:'Играть',tickerLearn:'Учиться',tickerCare:'Заботиться',tickerCreate:'Создавать',tickerFeel:'Чувствовать',appsKicker:'Коллекция Raccoon App Labs',appsTitle:'Выберите мир.<br>Мы уже открыли дверь.',appsCopy:'У каждого приложения — свой ритм, цвет и задача. Общее одно: понятный опыт, внимание к деталям и немного магии.',counterLabel:'живых<br>проектов',filterAll:'Все миры',filterPlay:'Играть',filterLearn:'Учиться',filterLive:'Жить проще',tagFamily:'Для семьи',storiesTitle:'Волшебные истории',storiesCopy:'Сказки, которые звучат голосом мамы или папы. Читайте, слушайте, записывайте любимые истории и превращайте вечернее чтение в семейную магию.',tagChinese:'Китайский',keysCopy:'Ключ к иероглифам — в их деталях. Тренируйте узнавание китайских знаков короткими подходами и превращайте сложные формы в знакомые образы.',tagCards:'HSK-карточки',bloomCopy:'1 940 иероглифов HSK 3.0 в визуальных карточках. Учитесь в своём темпе, повторяйте вовремя и наблюдайте, как китайский постепенно расцветает.',tagCozyGame:'Уютная игра',muropolisTitle:'Мурополис',muropolisCopy:'Постройте маленький город с большим мурчанием. Заселяйте котиков, развивайте мастерские и рисуйте свой уют — от дорожек и прудов до звёздных рек.',tagArcade:'Неон-аркада',neonCopy:'Прыгайте между стенами, ловите ритм и поднимайтесь выше ловушек. Догоните тень собственного рекорда и соберите свой неоновый стиль.',tagHome:'Для дома',foodTitle:'Что едим?',foodCopy:'Меню на неделю, любимые рецепты и умный список покупок в одном месте. Планируйте вместе — и больше не отвечайте на вечный вопрос «Что готовить?».',tagTogether:'Вместе удобнее',dokupitTitle:'Докупить',dokupitCopy:'Домашние запасы сами превращаются в общий список покупок. Отмечайте, что заканчивается, синхронизируйтесь с близкими и никогда не забывайте самое нужное.',valuesKicker:'Один почерк',valuesTitle:'Разные задачи.<br>Одинаково живой опыт.',valueIdeaTitle:'Характер',valueIdeaCopy:'Каждый продукт получает собственное настроение, а не растворяется в шаблоне.',valueSimpleTitle:'Ясность',valueSimpleCopy:'Сложные сценарии становятся понятными с первого прикосновения.',valueDetailTitle:'Забота',valueDetailCopy:'Маленькие детали работают на большое ощущение: здесь о пользователе подумали.',footerLine:'Приложения и игры с характером'},
+      en:{title:'Raccoon App Labs — apps and games with character',description:'Raccoon App Labs creates mobile apps and games — from cozy stories and Chinese learning to thoughtful tools for everyday life.',brandAria:'Raccoon App Labs — home',languageAria:'Choose language',filterAria:'Filter apps',navApps:'Our apps',eyebrow:'Independent app studio',heroTitle:'Seven worlds.<br>One <span class="gradient-word">character.</span>',heroCopy:'We make games and apps worth returning to — to play, learn, care for the people you love, and make an ordinary day feel a little better.',heroCta:'Explore the collection',heroNote:'7 apps · Android',tickerPlay:'Play',tickerLearn:'Learn',tickerCare:'Care',tickerCreate:'Create',tickerFeel:'Feel',appsKicker:'The Raccoon App Labs collection',appsTitle:'Choose a world.<br>We left the door open.',appsCopy:'Each app has its own rhythm, color, and purpose. What unites them is a clear experience, careful details, and a little magic.',counterLabel:'living<br>projects',filterAll:'All worlds',filterPlay:'Play',filterLearn:'Learn',filterLive:'Live smarter',tagFamily:'For families',storiesTitle:'Magical Stories',storiesCopy:'Fairy tales told in Mom’s or Dad’s voice. Read, listen, record favorite stories, and turn bedtime reading into a family kind of magic.',tagChinese:'Chinese',keysCopy:'The key to Hanzi is in the details. Build recognition in short, focused sessions and turn intricate characters into familiar visual patterns.',tagCards:'HSK flashcards',bloomCopy:'1,940 HSK 3.0 characters in memorable visual cards. Learn at your pace, review at the right time, and watch your Chinese knowledge bloom.',tagCozyGame:'Cozy game',muropolisTitle:'Muropolis',muropolisCopy:'Build a tiny city with a big purr. Welcome distinctive cats, run cozy workshops, and draw your world from winding paths and ponds to rivers made of stars.',tagArcade:'Neon arcade',neonCopy:'Kick between walls, catch the rhythm, and climb past moving traps. Race the ghost of your best run and build a neon style of your own.',tagHome:'For home',foodTitle:'What Shall We Eat?',foodCopy:'A weekly menu, favorite recipes, and a smart shopping list in one place. Plan together — and retire the eternal question: “What should we cook?”',tagTogether:'Better together',dokupitTitle:'Dokupit',dokupitCopy:'Turn household supplies into a shared shopping list automatically. Mark what is running low, stay in sync with loved ones, and never forget the essentials.',valuesKicker:'One signature',valuesTitle:'Different problems.<br>The same human experience.',valueIdeaTitle:'Character',valueIdeaCopy:'Every product gets a distinct mood instead of disappearing into a template.',valueSimpleTitle:'Clarity',valueSimpleCopy:'Complex flows become clear from the very first tap.',valueDetailTitle:'Care',valueDetailCopy:'Small details create one big feeling: someone thought about you.',footerLine:'Apps and games with character'}
+    };
+    const root=document.documentElement,switcher=document.querySelector('.language-switch');let activeLanguage=localStorage.getItem('ral-language')||(navigator.language.toLowerCase().startsWith('ru')?'ru':'en');
+    function applyLanguage(language,animate=true){activeLanguage=language;const d=translations[language];root.lang=language;document.title=d.title;document.querySelector('meta[name=description]').content=d.description;document.querySelectorAll('[data-i18n]').forEach(n=>n.textContent=d[n.dataset.i18n]);document.querySelectorAll('[data-i18n-html]').forEach(n=>n.innerHTML=d[n.dataset.i18nHtml]);document.querySelectorAll('[data-i18n-aria]').forEach(n=>n.setAttribute('aria-label',d[n.dataset.i18nAria]));switcher.style.setProperty('--side',language==='ru'?0:1);switcher.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===language?'true':'false'));localStorage.setItem('ral-language',language);if(animate){document.body.classList.remove('language-fade');void document.body.offsetWidth;document.body.classList.add('language-fade')}}
+    switcher.addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(b&&b.dataset.lang!==activeLanguage)applyLanguage(b.dataset.lang)});applyLanguage(activeLanguage,false);
+    let raf=0;window.addEventListener('pointermove',e=>{if(raf)return;raf=requestAnimationFrame(()=>{root.style.setProperty('--mx',`${e.clientX}px`);root.style.setProperty('--my',`${e.clientY}px`);raf=0})},{passive:true});
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=`${Math.min((i%5)*70,280)}ms`;observer.observe(el)});
+    document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.filter;document.querySelectorAll('.filter').forEach(item=>item.setAttribute('aria-pressed',item===button?'true':'false'));document.querySelectorAll('.app-card').forEach(card=>{const visible=category==='all'||card.dataset.category===category;card.classList.toggle('hidden',!visible);if(visible)card.animate([{opacity:0,transform:'translateY(18px) scale(.98)'},{opacity:1,transform:'none'}],{duration:430,easing:'cubic-bezier(.2,.8,.2,1)'})})}));
+    if(matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches)document.querySelectorAll('.app-card').forEach(card=>{card.addEventListener('pointermove',e=>{const b=card.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;card.style.setProperty('--card-x',`${x*100}%`);card.style.setProperty('--card-y',`${y*100}%`);card.style.transform=`perspective(900px) rotateX(${(0.5-y)*3.5}deg) rotateY(${(x-.5)*3.5}deg) translateY(-5px)`});card.addEventListener('pointerleave',()=>card.style.transform='')});
   </script>
 </body>
 </html>
