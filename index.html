@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0b0b19">
   <meta name="description" content="Enotessa — независимый разработчик мобильных приложений и игр.">
   <title>Enotessa — приложения и игры с характером</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2313112b'/%3E%3Cpath d='M18 18h29v9H28v5h16v8H28v6h20v9H18z' fill='%23ffbf69'/%3E%3Ccircle cx='49' cy='16' r='6' fill='%2377f2d0'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -85,16 +85,18 @@
     }
 
     .brand-mark {
-      width: 37px;
-      height: 37px;
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
       border: 1px solid rgba(255,255,255,.16);
       border-radius: 12px;
       background: linear-gradient(145deg, #252047, #141326);
       box-shadow: inset 0 1px rgba(255,255,255,.12), 0 8px 30px rgba(0,0,0,.3);
-      color: var(--peach);
+      overflow: hidden;
     }
+
+    .brand-mark img { width: 39px; height: 39px; object-fit: contain; }
 
     .status {
       display: inline-flex;
@@ -247,15 +249,12 @@
       animation: float 5.4s ease-in-out infinite;
     }
 
-    .core span {
-      font-size: clamp(70px, 11vw, 132px);
-      font-weight: 800;
-      letter-spacing: -.12em;
-      color: transparent;
-      background: linear-gradient(145deg, #fff3dc, var(--peach) 55%, var(--violet));
-      background-clip: text;
-      -webkit-background-clip: text;
-      transform: rotate(9deg) translateX(-.04em);
+    .core-logo {
+      width: 88%;
+      height: 88%;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 24px rgba(0,0,0,.32)) drop-shadow(0 0 22px rgba(103,67,255,.22));
+      transform: rotate(9deg);
     }
 
     .spark {
@@ -387,7 +386,7 @@
 <body>
   <header class="shell">
     <a class="brand" href="#top" aria-label="Enotessa — на главную">
-      <span class="brand-mark" aria-hidden="true">E</span>
+      <span class="brand-mark" aria-hidden="true"><img src="assets/enotessa-logo.webp" alt=""></span>
       <span>Enotessa</span>
     </a>
     <div class="status"><span class="status-dot" aria-hidden="true"></span><span class="status-label">Создаём новое</span></div>
@@ -411,15 +410,15 @@
         <div class="halo"></div>
         <div class="orbit orbit-a"></div>
         <div class="orbit orbit-b"></div>
-        <div class="core"><span>E</span></div>
+        <div class="core"><img class="core-logo" src="assets/enotessa-logo.webp" alt=""></div>
         <i class="spark one"></i><i class="spark two"></i><i class="spark three"></i>
       </div>
     </section>
 
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
-        <span>Mobile</span><span>Games</span><span>Design</span><span>Motion</span><span>Details matter</span>
-        <span>Mobile</span><span>Games</span><span>Design</span><span>Motion</span><span>Details matter</span>
+        <span>Mobile</span><span>Games</span><span>Apps</span><span>Independent</span><span>Details matter</span>
+        <span>Mobile</span><span>Games</span><span>Apps</span><span>Independent</span><span>Details matter</span>
       </div>
     </div>
 
