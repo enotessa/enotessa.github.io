@@ -3,84 +3,469 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Enotessa — мобильные приложения и игры</title>
-  <meta name="description" content="Официальный сайт разработчика мобильных приложений и игр Enotessa.">
+  <meta name="theme-color" content="#0b0b19">
+  <meta name="description" content="Enotessa — независимый разработчик мобильных приложений и игр.">
+  <title>Enotessa — приложения и игры с характером</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2313112b'/%3E%3Cpath d='M18 18h29v9H28v5h16v8H28v6h20v9H18z' fill='%23ffbf69'/%3E%3Ccircle cx='49' cy='16' r='6' fill='%2377f2d0'/%3E%3C/svg%3E">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
     :root {
-      color-scheme: light;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #403833;
-      background: #eef8f4;
+      color-scheme: dark;
+      --ink: #f7f5ff;
+      --muted: #aaa6be;
+      --violet: #8d7cff;
+      --peach: #ffae73;
+      --mint: #72f1cb;
+      --night: #090914;
+      --panel: rgba(22, 21, 43, .64);
+      --line: rgba(255, 255, 255, .1);
+      --mx: 50%;
+      --my: 35%;
+      font-family: "Manrope", system-ui, sans-serif;
+      background: var(--night);
+      color: var(--ink);
     }
+
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      min-width: 320px;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
+      overflow-x: hidden;
       background:
-        radial-gradient(circle at 15% 12%, rgba(255, 193, 170, .55), transparent 32%),
-        radial-gradient(circle at 85% 82%, rgba(124, 206, 187, .45), transparent 34%),
-        #eef8f4;
+        radial-gradient(720px circle at var(--mx) var(--my), rgba(117, 91, 255, .18), transparent 55%),
+        radial-gradient(900px circle at 8% 92%, rgba(73, 242, 194, .09), transparent 42%),
+        var(--night);
     }
-    main {
-      width: min(680px, 100%);
-      padding: clamp(32px, 7vw, 64px);
-      border: 1px solid rgba(107, 139, 126, .22);
-      border-radius: 32px;
-      background: rgba(255, 253, 247, .94);
-      box-shadow: 0 24px 70px rgba(63, 92, 80, .16);
-      text-align: center;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: .2;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
     }
-    .mark {
-      width: 76px;
-      height: 76px;
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      z-index: -1;
+      pointer-events: none;
+      background: conic-gradient(from 180deg at 50% 50%, transparent, rgba(141,124,255,.06), transparent, rgba(114,241,203,.05), transparent);
+      animation: atmosphere 28s linear infinite;
+    }
+
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    header {
+      height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .brand-mark {
+      width: 37px;
+      height: 37px;
       display: grid;
       place-items: center;
-      margin: 0 auto 18px;
-      border-radius: 24px;
-      background: linear-gradient(145deg, #ffb69f, #f28779);
-      box-shadow: 0 12px 25px rgba(219, 111, 92, .24);
-      color: white;
-      font-size: 38px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 12px;
+      background: linear-gradient(145deg, #252047, #141326);
+      box-shadow: inset 0 1px rgba(255,255,255,.12), 0 8px 30px rgba(0,0,0,.3);
+      color: var(--peach);
     }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 0 5px rgba(114,241,203,.08), 0 0 18px rgba(114,241,203,.65);
+      animation: breathe 2.7s ease-in-out infinite;
+    }
+
+    .hero {
+      min-height: calc(100vh - 150px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
+      align-items: center;
+      gap: clamp(40px, 7vw, 100px);
+      padding: 48px 0 96px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 22px;
+      color: var(--mint);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
+
     h1 {
+      max-width: 760px;
       margin: 0;
-      font-size: clamp(36px, 8vw, 58px);
-      letter-spacing: -.04em;
+      font-size: clamp(52px, 8.2vw, 106px);
+      font-weight: 800;
+      line-height: .94;
+      letter-spacing: -.075em;
     }
-    .lead {
-      max-width: 520px;
-      margin: 14px auto 34px;
-      color: #716760;
-      font-size: clamp(17px, 3vw, 20px);
+
+    .gradient-word {
+      position: relative;
+      display: inline-block;
+      padding-right: .08em;
+      color: transparent;
+      background: linear-gradient(105deg, var(--peach), #ffdf9f 44%, var(--mint) 78%, var(--violet));
+      background-size: 220% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: shimmer 7s ease-in-out infinite;
+    }
+
+    .intro {
+      max-width: 620px;
+      margin: 30px 0 0;
+      color: var(--muted);
+      font-size: clamp(18px, 2.2vw, 23px);
       line-height: 1.55;
+      letter-spacing: -.02em;
     }
+
+    .signature {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 38px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.035);
+      color: #d6d2e2;
+      font-size: 14px;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .chip:hover { transform: translateY(-3px); border-color: rgba(114,241,203,.42); background: rgba(114,241,203,.07); }
+
+    .visual {
+      position: relative;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      perspective: 900px;
+    }
+
+    .halo {
+      position: absolute;
+      width: 78%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(40px);
+      background: radial-gradient(circle, rgba(141,124,255,.24), rgba(255,174,115,.08) 45%, transparent 70%);
+      animation: halo 5s ease-in-out infinite alternate;
+    }
+
+    .orbit {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50%;
+      transform-style: preserve-3d;
+    }
+
+    .orbit::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 28px var(--mint);
+    }
+
+    .orbit-a { width: 90%; aspect-ratio: 1; animation: spin-a 15s linear infinite; }
+    .orbit-b { width: 68%; aspect-ratio: 1; border-color: rgba(255,174,115,.25); animation: spin-b 11s linear infinite reverse; }
+    .orbit-b::after { background: var(--peach); box-shadow: 0 0 28px var(--peach); }
+
+    .core {
+      position: relative;
+      width: 48%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 34%;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.13), transparent 45%),
+        linear-gradient(145deg, #29234e, #121124);
+      box-shadow: inset 0 1px rgba(255,255,255,.18), 0 35px 80px rgba(0,0,0,.42), 0 0 80px rgba(141,124,255,.15);
+      transform: rotate(-9deg);
+      animation: float 5.4s ease-in-out infinite;
+    }
+
+    .core span {
+      font-size: clamp(70px, 11vw, 132px);
+      font-weight: 800;
+      letter-spacing: -.12em;
+      color: transparent;
+      background: linear-gradient(145deg, #fff3dc, var(--peach) 55%, var(--violet));
+      background-clip: text;
+      -webkit-background-clip: text;
+      transform: rotate(9deg) translateX(-.04em);
+    }
+
+    .spark {
+      position: absolute;
+      width: 7px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 18px white;
+      animation: blink 2.8s ease-in-out infinite;
+    }
+    .spark.one { top: 12%; right: 18%; animation-delay: -.7s; }
+    .spark.two { bottom: 19%; left: 9%; width: 4px; animation-delay: -1.5s; }
+    .spark.three { top: 28%; left: 14%; width: 3px; animation-delay: -2.1s; }
+
+    .ticker {
+      border-block: 1px solid var(--line);
+      overflow: hidden;
+      background: rgba(255,255,255,.022);
+    }
+
+    .ticker-track {
+      width: max-content;
+      display: flex;
+      gap: 30px;
+      padding: 18px 0;
+      color: #c8c3d7;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      animation: ticker 24s linear infinite;
+    }
+
+    .ticker-track span::after { content: "✦"; margin-left: 30px; color: var(--peach); }
+
+    .values { padding: 110px 0 130px; }
+    .section-head { max-width: 720px; margin-bottom: 46px; }
+    .section-head small { color: var(--violet); font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h2 { margin: 14px 0 0; font-size: clamp(36px, 5vw, 62px); line-height: 1.05; letter-spacing: -.055em; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .card {
-      padding: 22px;
-      border-radius: 22px;
-      background: #e8f5ef;
+      position: relative;
+      min-height: 285px;
+      padding: 30px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease;
     }
-    .card strong { display: block; margin-bottom: 7px; font-size: 19px; }
-    .card p { margin: 0 0 14px; color: #65746d; line-height: 1.5; }
-    a { color: #21786c; font-weight: 700; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
-    footer { margin-top: 30px; color: #9a918b; font-size: 14px; }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -75px;
+      bottom: -85px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .12;
+      filter: blur(2px);
+      transition: transform .5s ease, opacity .35s ease;
+    }
+
+    .card:hover { transform: translateY(-9px); border-color: color-mix(in srgb, var(--accent) 52%, transparent); box-shadow: 0 25px 55px rgba(0,0,0,.24); }
+    .card:hover::before { transform: scale(1.35); opacity: .2; }
+    .card:nth-child(1) { --accent: var(--peach); }
+    .card:nth-child(2) { --accent: var(--mint); }
+    .card:nth-child(3) { --accent: var(--violet); }
+    .number { color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .13em; }
+    .card h3 { margin: 74px 0 12px; font-size: 26px; letter-spacing: -.035em; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--line);
+      color: #858196;
+      font-size: 13px;
+    }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.75,.25,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @keyframes atmosphere { to { transform: rotate(360deg); } }
+    @keyframes breathe { 50% { opacity: .5; transform: scale(.72); } }
+    @keyframes shimmer { 50% { background-position: 100% 50%; } }
+    @keyframes halo { to { transform: scale(1.12); opacity: .65; } }
+    @keyframes spin-a { to { transform: rotate(360deg) rotateX(62deg) rotateZ(18deg); } }
+    @keyframes spin-b { to { transform: rotate(360deg) rotateY(65deg) rotateZ(-14deg); } }
+    @keyframes float { 50% { transform: rotate(-4deg) translateY(-16px); } }
+    @keyframes blink { 50% { opacity: .18; transform: scale(.5); } }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    @media (max-width: 800px) {
+      .hero { min-height: auto; grid-template-columns: 1fr; padding: 55px 0 80px; }
+      .visual { width: min(430px, 92vw); margin: 0 auto; order: -1; }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: 220px; }
+      .card h3 { margin-top: 45px; }
+      .values { padding: 84px 0 96px; }
+    }
+
+    @media (max-width: 520px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      header { height: 76px; }
+      .status { padding: 9px 11px; }
+      .status-label { display: none; }
+      .hero { gap: 34px; padding-top: 34px; }
+      h1 { font-size: clamp(46px, 15vw, 72px); }
+      .intro { font-size: 17px; }
+      .visual { width: min(340px, 92vw); }
+      footer { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <div class="mark" aria-hidden="true">✦</div>
-    <h1>Enotessa</h1>
-    <p class="lead">Мы создаём мобильные приложения и игры — понятные, красивые и сделанные с вниманием к деталям.</p>
+  <header class="shell">
+    <a class="brand" href="#top" aria-label="Enotessa — на главную">
+      <span class="brand-mark" aria-hidden="true">E</span>
+      <span>Enotessa</span>
+    </a>
+    <div class="status"><span class="status-dot" aria-hidden="true"></span><span class="status-label">Создаём новое</span></div>
+  </header>
 
-    <section class="card" aria-labelledby="documents-title">
-      <strong id="documents-title">Документы приложений</strong>
-      <p>Правила обработки данных и другая информация о наших проектах.</p>
-      <a href="https://enotessa.github.io/muropolis-privacy/privacy/">Политика конфиденциальности «Мурополиса»</a>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Независимая разработка</p>
+        <h1>Идеи,<br>которым хочется <span class="gradient-word">жить.</span></h1>
+        <p class="intro">Создаём мобильные приложения и игры с ясной логикой, выразительным дизайном и вниманием к каждому маленькому взаимодействию.</p>
+        <div class="signature" aria-label="Направления работы">
+          <span class="chip">Мобильные игры</span>
+          <span class="chip">Приложения</span>
+          <span class="chip">Интерфейсы</span>
+          <span class="chip">Анимация</span>
+        </div>
+      </div>
+
+      <div class="visual reveal" aria-hidden="true">
+        <div class="halo"></div>
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="core"><span>E</span></div>
+        <i class="spark one"></i><i class="spark two"></i><i class="spark three"></i>
+      </div>
     </section>
 
-    <footer>Официальный сайт разработчика Enotessa</footer>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Mobile</span><span>Games</span><span>Design</span><span>Motion</span><span>Details matter</span>
+        <span>Mobile</span><span>Games</span><span>Design</span><span>Motion</span><span>Details matter</span>
+      </div>
+    </div>
+
+    <section class="values shell">
+      <div class="section-head reveal">
+        <small>Наш подход</small>
+        <h2>Технологии должны ощущаться человечно.</h2>
+      </div>
+      <div class="cards">
+        <article class="card reveal"><span class="number">01</span><h3>Идея</h3><p>Начинаем не с шаблона, а с характера продукта и ощущения, которое он должен оставить.</p></article>
+        <article class="card reveal"><span class="number">02</span><h3>Простота</h3><p>Убираем лишнее, чтобы сложные вещи становились понятными с первого прикосновения.</p></article>
+        <article class="card reveal"><span class="number">03</span><h3>Детали</h3><p>Движение, звук, ритм и визуальные акценты складываются в цельный живой опыт.</p></article>
+      </div>
+    </section>
   </main>
+
+  <footer class="shell">
+    <span>© 2026 Enotessa</span>
+    <span>Мобильные приложения и игры с характером</span>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    let raf = 0;
+    window.addEventListener('pointermove', (event) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        root.style.setProperty('--mx', `${event.clientX}px`);
+        root.style.setProperty('--my', `${event.clientY}px`);
+        raf = 0;
+      });
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .14 });
+
+    document.querySelectorAll('.reveal').forEach((element, index) => {
+      element.style.transitionDelay = `${Math.min(index * 80, 320)}ms`;
+      observer.observe(element);
+    });
+  </script>
 </body>
 </html>
